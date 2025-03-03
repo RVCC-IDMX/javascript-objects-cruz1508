@@ -10,7 +10,7 @@
 const SHOW_EXAMPLES = false;
 
 function isObject(value) {
-  // implement code here
+  return value && typeof value === 'object' && value !== null;
   // Check if the value is an object and not null.
 }
 
@@ -23,7 +23,8 @@ function isObject(value) {
  * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/typeof
  */
 export function hasPropertyOfType(obj, prop, expectedType) {
-  // implement code here
+  return obj && typeof obj[prop] === expectedType;
+  // Check if the property exists and is of the expected type.
 }
 
 /**
@@ -33,7 +34,12 @@ export function hasPropertyOfType(obj, prop, expectedType) {
  * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Property_accessors
  */
 export function getMovieTitle(movie) {
-  // implement code here
+  if (movie && typeof movie.title === 'string') {
+    return movie.title;
+  } else {
+    console.error("Error: Invalid movie object or missing title.");
+    return '';
+  }
 }
 
 /**
@@ -43,9 +49,9 @@ export function getMovieTitle(movie) {
  * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Property_accessors
  */
 export function getMovieYear(movie) {
+  return movie && typeof movie.year === 'number' ? movie.year : 0;
   // Use bracket notation as an alternative approach to property access.
   // While dot notation is common for fixed property names, bracket notation is useful when property names are dynamic.
-  // implement code here
 }
 
 /**
@@ -55,7 +61,8 @@ export function getMovieYear(movie) {
  * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Comparison_Operators
  */
 export function isMovieClassic(movie) {
-  // implement code here
+  return movie && movie.year < 2000;
+  // Determine if the movie is considered classic based on its release year.
 }
 
 /**
@@ -65,7 +72,8 @@ export function isMovieClassic(movie) {
  * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/keys
  */
 export function getMovieKeys(movie) {
-  // implement code here
+  return movie ? Object.keys(movie) : [];
+  // Return the list of property names for the movie object.
 }
 
 /**
@@ -75,7 +83,8 @@ export function getMovieKeys(movie) {
  * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/keys
  */
 export function getMoviePropertiesCount(movie) {
-  // implement code here
+  return movie ? Object.keys(movie).length : 0;
+  // Return the number of properties in the movie object.
 }
 
 // --------------------
