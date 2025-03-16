@@ -10,8 +10,8 @@
 const SHOW_EXAMPLES = false;
 
 function isObject(value) {
-  return value && typeof value === 'object' && value !== null;
   // Check if the value is an object and not null.
+  return value !== null && typeof value === 'object';
 }
 
 /**
@@ -23,8 +23,7 @@ function isObject(value) {
  * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/typeof
  */
 export function hasPropertyOfType(obj, prop, expectedType) {
-  return obj && typeof obj[prop] === expectedType;
-  // Check if the property exists and is of the expected type.
+  return obj.hasOwnProperty(prop) && typeof obj[prop] === expectedType;
 }
 
 /**
@@ -34,10 +33,11 @@ export function hasPropertyOfType(obj, prop, expectedType) {
  * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Property_accessors
  */
 export function getMovieTitle(movie) {
-  if (movie && typeof movie.title === 'string') {
+  // Use dot notation to retrieve the movie title.
+  if (isObject(movie) && movie.title) {
     return movie.title;
   } else {
-    console.error("Error: Invalid movie object or missing title.");
+    console.log("getMovieTitle: Invalid movie object or title missing.");
     return '';
   }
 }
@@ -49,11 +49,14 @@ export function getMovieTitle(movie) {
  * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Property_accessors
  */
 export function getMovieYear(movie) {
-  return movie && typeof movie.year === 'number' ? movie.year : 0;
   // Use bracket notation as an alternative approach to property access.
-  // While dot notation is common for fixed property names, bracket notation is useful when property names are dynamic.
+  if (isObject(movie) && movie['year']) {
+    return movie['year'];
+  } else {
+    console.log("getMovieYear: Invalid movie object or year missing.");
+    return 0;
+  }
 }
-
 /**
  * Determines whether the movie is considered classic (released before 2000).
  * @param {object} movie - The movie object.
@@ -61,8 +64,13 @@ export function getMovieYear(movie) {
  * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Comparison_Operators
  */
 export function isMovieClassic(movie) {
-  return movie && movie.year < 2000;
-  // Determine if the movie is considered classic based on its release year.
+  // Check if the movie year is before 2000.
+  if (isObject(movie) && movie.year) {
+    return movie.year < 2000;
+  } else {
+    console.log("isMovieClassic: Movie object invalid or missing year.");
+    return false;
+  }
 }
 
 /**
@@ -72,8 +80,13 @@ export function isMovieClassic(movie) {
  * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/keys
  */
 export function getMovieKeys(movie) {
-  return movie ? Object.keys(movie) : [];
-  // Return the list of property names for the movie object.
+  // Return the list of property names of the movie object.
+  if (isObject(movie)) {
+    return Object.keys(movie);
+  } else {
+    console.log("getMovieKeys: Provided input is not a valid object.");
+    return [];
+  }
 }
 
 /**
@@ -83,8 +96,13 @@ export function getMovieKeys(movie) {
  * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/keys
  */
 export function getMoviePropertiesCount(movie) {
-  return movie ? Object.keys(movie).length : 0;
   // Return the number of properties in the movie object.
+  if (isObject(movie)) {
+    return Object.keys(movie).length;
+  } else {
+    console.log("getMoviePropertiesCount: Provided input is not a valid object.");
+    return 0;
+  }
 }
 
 // --------------------
